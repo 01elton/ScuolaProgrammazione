@@ -7,4 +7,6 @@ interface CourseRepository {
     fun courseEditionsByCourseId(id: Int) : List<EdizioneCorso?>?
     fun add(corso: Corso) : Unit
     fun close()
+    fun addCourseEdition(ec:EdizioneCorso)
+
 }

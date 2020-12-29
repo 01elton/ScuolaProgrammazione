@@ -75,4 +75,8 @@ class MemoryRepository(val corsi: MutableList<Corso> = mutableListOf()) : Course
     override fun close() {
 
     }
+
+    override fun addCourseEdition(ec: EdizioneCorso) {
+        TODO("Not yet implemented")
+    }
 }
