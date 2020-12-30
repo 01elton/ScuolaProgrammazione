@@ -22,7 +22,7 @@ class FileRepository : CourseRepository {
                     // Crea nuova edizione da questa linea
                     val edizione = EdizioneCorso.parse(lineeEdizione,corso)
                     // Inserisci nuova edizione in posizione i delle edizioni del corso
-                    corso.edizioni.add(i,edizione)
+                    corso.edizioni[i] = edizione
                 }
             }
             memory = MemoryRepository(corsi)
@@ -64,5 +64,21 @@ class FileRepository : CourseRepository {
                 pw.println(e!!.toCsvLine())
             }
         }
+    }
+
+    override fun addCourseEdition(ec: EdizioneCorso) {
+        return memory.addCourseEdition(ec)
+    }
+
+    override fun deleteCourse(id: Int) {
+        return memory.deleteCourse(id)
+    }
+
+    override fun trovaEdizionePrezzoMax(): EdizioneCorso? {
+       return memory.trovaEdizionePrezzoMax()
+    }
+
+    override fun trovaEdizionePrezzoMin(): EdizioneCorso? {
+        return memory.trovaEdizionePrezzoMin()
     }
 }

@@ -33,11 +33,31 @@ class UI(val repository: CourseRepository) {
                 }
                 "ae" -> {
                     val edition = addCourseEdition()
+                    repository.addCourseEdition(edition)
 
+                }
+                 "dc" ->{
+                     deleteCorso()
+                 }
+                "ic"-> {
+                    val incassoTotale= calcolaIncassoTotale()
+                    println("incasso totale e $incassoTotale")
+                }
+
+                "em" -> {
+                    val edizioneMax = trovaEdizionePrezzoMax()
+                    println("L'edizione con costo maggiore ha costo ${edizioneMax!!.costo}")
+                }
+                "es" -> {
+                    val edizioneMin = trovaEdizionePrezzoMin()
+                    println("L'edizione con costo minore ha costo ${edizioneMin!!.costo}")
                 }
             }
         } while(input != "q")
     }
+
+
+
     fun addCourse() : Corso{
         print( "inserisci ID")
         var id = readLine()!!
@@ -111,5 +131,49 @@ class UI(val repository: CourseRepository) {
 
 
     }
+
+    fun deleteCorso(){
+
+        print("inserisci id corso da cancellare ")
+        var corso : Corso? = null
+
+        do {
+            print("inserisci id del corso ")
+            var idCorso = readLine()!!
+            corso = repository.courseById(idCorso.toInt())
+            if(corso == null) {
+                println("inserisci un id valido, quello che mi hai dato non esiste")
+            }
+        }
+        while (corso == null)
+        repository.deleteCourse(corso.id)
+
+    }
+    fun calcolaIncassoTotale(): Double {
+
+        var incassoTot : Double = 0.00
+
+        val elencoCorso = repository.readCourses()
+        for (c in elencoCorso){
+            for (e in c.edizioni){
+
+                incassoTot += (e?.costo ?: 0.0 ) * 10
+
+            }
+        }
+        return  incassoTot
+
+    }
+    fun trovaEdizionePrezzoMax():EdizioneCorso? {
+
+        return repository.trovaEdizionePrezzoMax()
+
+    }
+    private fun trovaEdizionePrezzoMin(): EdizioneCorso? {
+
+        return repository.trovaEdizionePrezzoMin()
+
+    }
+
 }
 

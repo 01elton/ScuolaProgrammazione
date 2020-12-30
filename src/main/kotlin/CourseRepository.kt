@@ -8,5 +8,8 @@ interface CourseRepository {
     fun add(corso: Corso) : Unit
     fun close()
     fun addCourseEdition(ec:EdizioneCorso)
+    fun deleteCourse(id: Int)
+    fun trovaEdizionePrezzoMax(): EdizioneCorso?
+    fun trovaEdizionePrezzoMin(): EdizioneCorso?
 
 }

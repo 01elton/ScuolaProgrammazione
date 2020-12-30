@@ -70,6 +70,7 @@ class MemoryRepository(val corsi: MutableList<Corso> = mutableListOf()) : Course
 
     override fun add(corso: Corso) {
         corsi.add(corso)
+
     }
 
     override fun close() {
@@ -77,6 +78,39 @@ class MemoryRepository(val corsi: MutableList<Corso> = mutableListOf()) : Course
     }
 
     override fun addCourseEdition(ec: EdizioneCorso) {
-        TODO("Not yet implemented")
+        val cf = corsi.find { it.id == ec.corso.id  }
+        if(cf != null) {
+            cf.edizioni.add(ec)
+        }
+    }
+
+    override fun deleteCourse(id: Int) {
+        corsi.removeIf{ it.id == id }
+
+    }
+
+    override fun trovaEdizionePrezzoMax(): EdizioneCorso? {
+
+        return readCourseEditions().maxByOrNull { it!!.costo }
+        /* val elencoEdizione = readCourseEditions()
+        if (elencoEdizione.size == 0){
+            return  null
+        }
+        var edizioneMax = elencoEdizione[0]
+
+
+        for (e in elencoEdizione){
+            if (e!!.costo > edizioneMax!!.costo){
+                edizioneMax = e
+            }
+        }
+        return edizioneMax
+
+         */
+
+    }
+
+    override fun trovaEdizionePrezzoMin(): EdizioneCorso? {
+        return readCourseEditions().minByOrNull { it!!.costo }
     }
 }
